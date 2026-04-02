@@ -811,6 +811,269 @@
       transition-delay: 0.4s;
     }
 
+    /* ============================================================
+       ENHANCED ANIMATIONS & COLOR ACCENTS
+       ============================================================ */
+
+    :root {
+      --accent: #B8912E;
+    }
+
+    /* Hero — atmospheric golden shimmer */
+    .hero {
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -5%;
+      width: 65%;
+      height: 110%;
+      background: radial-gradient(ellipse at center, rgba(184, 145, 46, 0.1) 0%, transparent 65%);
+      animation: heroGlow 9s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes heroGlow {
+      0%   { opacity: 0.4; transform: scale(0.95) translateY(0); }
+      100% { opacity: 1;   transform: scale(1.08) translateY(-3%); }
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Hero eyebrow line — animate on load */
+    .hero-eyebrow::before {
+      animation: eyebrowLine 1s ease 0.4s both;
+    }
+
+    @keyframes eyebrowLine {
+      from { width: 0; }
+      to   { width: 40px; }
+    }
+
+    /* Scroll indicator bounce */
+    .hero-scroll {
+      animation: scrollBounce 2.4s ease-in-out infinite;
+    }
+
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(8px); }
+    }
+
+    /* Buttons — slide-fill hover via background gradient */
+    .btn-primary {
+      background: linear-gradient(to right, var(--accent) 50%, var(--black) 50%) !important;
+      background-size: 210% 100% !important;
+      background-position: 100% 0 !important;
+      transition: background-position 0.5s cubic-bezier(0.77, 0, 0.18, 1) !important;
+    }
+
+    .btn-primary:hover {
+      background-position: 0 0 !important;
+    }
+
+    .nav-cta {
+      background: linear-gradient(to right, var(--accent) 50%, var(--black) 50%) !important;
+      background-size: 210% 100% !important;
+      background-position: 100% 0 !important;
+      transition: background-position 0.5s cubic-bezier(0.77, 0, 0.18, 1) !important;
+    }
+
+    .nav-cta:hover {
+      background-position: 0 0 !important;
+    }
+
+    .form-submit {
+      background: linear-gradient(to right, var(--accent) 50%, var(--black) 50%) !important;
+      background-size: 210% 100% !important;
+      background-position: 100% 0 !important;
+      transition: background-position 0.5s cubic-bezier(0.77, 0, 0.18, 1) !important;
+    }
+
+    .form-submit:hover {
+      background-position: 0 0 !important;
+    }
+
+    /* Nav links — animated underline */
+    .nav-links a:not(.nav-cta) {
+      position: relative;
+    }
+
+    .nav-links a:not(.nav-cta)::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.35s ease;
+    }
+
+    .nav-links a:not(.nav-cta):hover::after {
+      width: 100%;
+    }
+
+    /* Service cards — accent left bar on hover */
+    .service-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2px;
+      height: 0;
+      background: var(--accent);
+      transition: height 0.5s ease;
+    }
+
+    .service-item:hover::before {
+      height: 100%;
+    }
+
+    .service-item:hover .service-num {
+      color: var(--accent);
+      transition: color 0.3s;
+    }
+
+    .service-item:hover {
+      background: rgba(184, 145, 46, 0.04) !important;
+    }
+
+    /* Process steps — accent bottom bar on hover */
+    .process-step {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .process-step::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.5s ease;
+    }
+
+    .process-step:hover::after {
+      width: 100%;
+    }
+
+    .process-step:hover .process-step-num {
+      color: var(--accent);
+      transition: color 0.3s;
+    }
+
+    /* em tags — warm accent color */
+    .services-title em {
+      color: var(--accent) !important;
+    }
+
+    .included-title em {
+      color: var(--accent) !important;
+    }
+
+    .contact-title em {
+      color: var(--accent) !important;
+    }
+
+    /* btn-secondary — accent on hover */
+    .btn-secondary {
+      transition: color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .btn-secondary:hover {
+      color: var(--accent) !important;
+      border-color: var(--accent);
+    }
+
+    /* Included list — indent on hover */
+    .included-list li {
+      transition: padding-left 0.25s ease, color 0.25s ease;
+    }
+
+    .included-list li:hover {
+      padding-left: 8px;
+      color: var(--ink);
+    }
+
+    .included-list li:hover::before {
+      background: var(--accent);
+    }
+
+    /* Contact items — indent + label accent */
+    .contact-item {
+      transition: padding-left 0.25s ease;
+    }
+
+    .contact-item:hover {
+      padding-left: 8px;
+    }
+
+    .contact-item:hover .contact-item-label {
+      color: var(--accent);
+      transition: color 0.3s ease;
+    }
+
+    /* Form inputs — accent on focus */
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent) !important;
+    }
+
+    /* Section label line — animate in */
+    .section-label::after {
+      transform-origin: left center;
+      transform: scaleX(0);
+      transition: opacity 0.7s ease, transform 0.8s ease 0.25s;
+    }
+
+    .section-label.visible::after {
+      transform: scaleX(1);
+    }
+
+    /* Directional fade variants */
+    body.js-ready .fade-in-left {
+      opacity: 0;
+      transform: translateX(-32px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    body.js-ready .fade-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    body.js-ready .fade-in-right {
+      opacity: 0;
+      transform: translateX(32px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    body.js-ready .fade-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Big price — subtle scale on hover */
+    .big-price {
+      display: inline-block;
+      transition: transform 0.3s ease;
+      cursor: default;
+    }
+
+    .big-price:hover {
+      transform: scale(1.03);
+    }
+
     /* RESPONSIVE */
     @media (max-width: 900px) {
       nav {
@@ -1089,7 +1352,7 @@
   <section id="ukljuceno">
     <div class="section-label">Šta je uključeno</div>
     <div class="included-grid">
-      <div class="included-left fade-in">
+      <div class="included-left fade-in fade-in-left">
         <h2 class="included-title">Za €500<br>dobijate <em>gotov<br>biznis online.</em></h2>
         <p style="font-size:14px; color:var(--ink-mid); line-height:1.8; margin-bottom:32px;">Nema skrivenih troškova.
           Cena pokriva kompletan dizajn i razvoj. Jedini dodatan trošak koji plaćate direktno je domen (~€10/godišnje)
@@ -1104,8 +1367,8 @@
           <li>Besplatna tehnička podrška 30 dana</li>
         </ul>
       </div>
-      <div class="included-right fade-in fade-in-delay-1">
-        <div class="big-price">€500</div>
+      <div class="included-right fade-in fade-in-right fade-in-delay-1">
+        <div class="big-price" data-count="500">€<span class="count-num">500</span></div>
         <div class="big-price-note" style="margin:12px 0 40px;">Fiksna cena · Bez iznenađenja</div>
         <p style="font-size:14px; color:var(--ink-mid); line-height:1.8; margin-bottom:32px; max-width:360px;">Svaki
           mesec hiljade ljudi u vašem gradu traži vaš tip usluge na Google-u. Bez sajta — oni odlaze kod konkurencije.
@@ -1124,7 +1387,7 @@
   <section id="kontakt">
     <div class="section-label">Kontakt</div>
     <div class="contact-grid">
-      <div class="contact-left fade-in">
+      <div class="contact-left fade-in fade-in-left">
         <h2 class="contact-title">Hajde da<br><em>napravimo</em><br>nešto.</h2>
         <p class="contact-bio">Zovem se Aleksandar. Student sam i web dizajner iz Beograda. Pravim sajtove za lokalne
           firme — brzo, kvalitetno i po razumnoj ceni. Svaki sajt pristupam ozbiljno jer znam da je to vaše lice na
@@ -1149,7 +1412,7 @@
           </div>
         </div>
       </div>
-      <div class="contact-right fade-in fade-in-delay-1">
+      <div class="contact-right fade-in fade-in-right fade-in-delay-1">
         <form class="contact-form" id="contactForm" action="https://formspree.io/f/mzdkeraq" method="POST">
           <div class="form-row">
             <div class="form-group">
@@ -1229,6 +1492,36 @@
         observer.observe(el);
       }
     });
+
+    // Observe section labels for line-in animation
+    document.querySelectorAll('.section-label').forEach(el => observer.observe(el));
+
+    // Counter animation for [data-count] elements
+    function animateCount(el) {
+      const target = +el.dataset.count;
+      const numEl = el.querySelector('.count-num') || el;
+      const duration = 1400;
+      const start = performance.now();
+      function step(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        numEl.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(step);
+        else numEl.textContent = target;
+      }
+      requestAnimationFrame(step);
+    }
+
+    const countObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !e.target.dataset.counted) {
+          e.target.dataset.counted = '1';
+          animateCount(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
 
     document.getElementById('contactForm').addEventListener('submit', async function (e) {
       e.preventDefault();
