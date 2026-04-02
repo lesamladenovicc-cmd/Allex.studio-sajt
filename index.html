@@ -1,1082 +1,1268 @@
 <!DOCTYPE html>
 <html lang="sr">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aleksandar — Web Dizajn</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --beige: #F2EDE3;
-    --beige-dark: #E5DDD0;
-    --beige-mid: #CFC5B4;
-    --black: #0E0E0E;
-    --black-soft: #1C1C1C;
-    --ink: #2E2A25;
-    --ink-mid: #6B6459;
-    --ink-light: #9C9288;
-    --border: rgba(14,14,14,0.1);
-    --border-strong: rgba(14,14,14,0.2);
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--beige);
-    color: var(--ink);
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 15px;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 24px 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--beige);
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s, padding 0.3s;
-  }
-
-  nav.scrolled {
-    border-color: var(--border);
-    padding: 16px 48px;
-  }
-
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    color: var(--black);
-    text-decoration: none;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 36px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink-mid);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--black); }
-
-  .nav-cta {
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--beige) !important;
-    background: var(--black);
-    padding: 10px 22px;
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s !important;
-  }
-
-  .nav-cta:hover { background: var(--ink) !important; }
-
-  /* HAMBURGER */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-    background: none;
-    border: none;
-  }
-
-  .hamburger span {
-    display: block;
-    width: 24px;
-    height: 1px;
-    background: var(--black);
-    transition: transform 0.3s, opacity 0.3s;
-  }
-
-  .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-
-  .mobile-menu {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: var(--beige);
-    z-index: 200;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.3s, visibility 0.3s;
-  }
-
-  .mobile-menu.open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-  }
-
-  .mobile-menu a {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 36px;
-    font-weight: 300;
-    color: var(--black);
-    text-decoration: none;
-    letter-spacing: 0.02em;
-  }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 48px 80px;
-    padding-top: 120px;
-    position: relative;
-  }
-
-  .hero-eyebrow {
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    margin-bottom: 28px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .hero-eyebrow::before {
-    content: '';
-    display: block;
-    width: 40px;
-    height: 1px;
-    background: var(--beige-mid);
-  }
-
-  .hero h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(52px, 9vw, 120px);
-    font-weight: 300;
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    color: var(--black);
-    max-width: 900px;
-    margin-bottom: 48px;
-  }
-
-  .hero h1 em {
-    font-style: italic;
-    color: var(--ink-mid);
-  }
-
-  .hero-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 40px;
-    flex-wrap: wrap;
-    padding-right: 80px;
-  }
-
-  .hero-desc {
-    max-width: 400px;
-    font-size: 15px;
-    color: var(--ink-mid);
-    line-height: 1.75;
-  }
-
-  .hero-cta-group {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 16px;
-  }
-
-  .price-tag {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 48px;
-    font-weight: 300;
-    color: var(--black);
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
-
-  .price-sub {
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    text-align: right;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 260px;
-  }
-
-  .btn-primary {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--beige);
-    background: var(--black);
-    padding: 16px 36px;
-    text-decoration: none;
-    transition: background 0.2s;
-  }
-
-  .btn-primary:hover { background: var(--ink); }
-
-  .btn-secondary {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink-mid);
-    text-decoration: none;
-    border-bottom: 1px solid var(--border-strong);
-    padding-bottom: 2px;
-    transition: color 0.2s;
-  }
-
-  .btn-secondary:hover { color: var(--black); }
-
-  .hero-scroll {
-    position: absolute;
-    right: 48px;
-    bottom: 80px;
-    writing-mode: vertical-rl;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .hero-scroll::after {
-    content: '';
-    display: block;
-    width: 1px;
-    height: 48px;
-    background: var(--beige-mid);
-  }
-
-  /* DIVIDER LINE */
-  .divider { height: 1px; background: var(--border); margin: 0 48px; }
-
-  /* SECTION BASE */
-  section { padding: 100px 48px; }
-
-  .section-label {
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    margin-bottom: 60px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* SERVICES */
-  #usluge {
-    background: var(--black);
-  }
-
-  #usluge .section-label { color: rgba(242,237,227,0.3); }
-  #usluge .section-label::after { background: rgba(242,237,227,0.1); }
-
-  .services-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 60px;
-    margin-bottom: 80px;
-    flex-wrap: wrap;
-  }
-
-  .services-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 5vw, 64px);
-    font-weight: 300;
-    line-height: 1.1;
-    color: var(--beige);
-    letter-spacing: -0.01em;
-    max-width: 500px;
-  }
-
-  .services-title em { font-style: italic; color: var(--beige-mid); }
-
-  .services-intro {
-    max-width: 340px;
-    font-size: 14px;
-    color: rgba(242,237,227,0.5);
-    line-height: 1.8;
-    padding-top: 8px;
-  }
-
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    border: 1px solid rgba(242,237,227,0.1);
-  }
-
-  .service-item {
-    padding: 40px 36px;
-    border-right: 1px solid rgba(242,237,227,0.1);
-    position: relative;
-    transition: background 0.3s;
-  }
-
-  .service-item:last-child { border-right: none; }
-  .service-item:hover { background: rgba(242,237,227,0.03); }
-
-  .service-num {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: rgba(242,237,227,0.25);
-    margin-bottom: 28px;
-  }
-
-  .service-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
-    font-weight: 400;
-    color: var(--beige);
-    margin-bottom: 14px;
-    line-height: 1.2;
-  }
-
-  .service-desc {
-    font-size: 13px;
-    color: rgba(242,237,227,0.45);
-    line-height: 1.7;
-  }
-
-  .service-price {
-    margin-top: 28px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 32px;
-    font-weight: 300;
-    color: var(--beige);
-    letter-spacing: -0.01em;
-  }
-
-  .service-price span {
-    font-family: 'Jost', sans-serif;
-    font-size: 12px;
-    font-weight: 300;
-    color: rgba(242,237,227,0.3);
-    letter-spacing: 0.08em;
-    margin-left: 4px;
-  }
-
-  /* PROCESS */
-  .process-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    border: 1px solid var(--border);
-    margin-top: 0;
-  }
-
-  .process-step {
-    padding: 40px 32px;
-    border-right: 1px solid var(--border);
-    transition: background 0.3s;
-  }
-
-  .process-step:last-child { border-right: none; }
-  .process-step:hover { background: rgba(14,14,14,0.03); }
-
-  .process-step-num {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: var(--ink-light);
-    margin-bottom: 24px;
-  }
-
-  .process-step-icon {
-    width: 36px;
-    height: 36px;
-    margin-bottom: 20px;
-    opacity: 0.4;
-  }
-
-  .process-step-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--black);
-    margin-bottom: 10px;
-    line-height: 1.2;
-  }
-
-  .process-step-desc {
-    font-size: 13px;
-    color: var(--ink-mid);
-    line-height: 1.65;
-  }
-
-  .process-step-time {
-    margin-top: 20px;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-  }
-
-  /* WHAT'S INCLUDED */
-  .included-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-  }
-
-  .included-left {
-    padding-right: 80px;
-    border-right: 1px solid var(--border);
-  }
-
-  .included-right {
-    padding-left: 80px;
-  }
-
-  .included-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(32px, 4vw, 56px);
-    font-weight: 300;
-    line-height: 1.1;
-    color: var(--black);
-    letter-spacing: -0.01em;
-    margin-bottom: 40px;
-  }
-
-  .included-title em { font-style: italic; color: var(--ink-mid); }
-
-  .included-list {
-    list-style: none;
-    display: grid;
-    gap: 0;
-  }
-
-  .included-list li {
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 14px;
-    color: var(--ink-mid);
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .included-list li::before {
-    content: '';
-    display: block;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--black);
-    flex-shrink: 0;
-  }
-
-  .included-cta {
-    margin-top: 48px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .big-price {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(48px, 8vw, 96px);
-    font-weight: 300;
-    color: var(--black);
-    line-height: 1;
-    letter-spacing: -0.03em;
-  }
-
-  .big-price-note {
-    font-size: 12px;
-    color: var(--ink-light);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  /* ABOUT / CONTACT */
-  #kontakt {
-    background: var(--beige-dark);
-  }
-
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
-  }
-
-  .contact-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 5vw, 68px);
-    font-weight: 300;
-    line-height: 1.05;
-    color: var(--black);
-    letter-spacing: -0.02em;
-    margin-bottom: 32px;
-  }
-
-  .contact-title em { font-style: italic; color: var(--ink-mid); }
-
-  .contact-bio {
-    font-size: 15px;
-    color: var(--ink-mid);
-    line-height: 1.8;
-    margin-bottom: 40px;
-    max-width: 420px;
-  }
-
-  .contact-items {
-    display: grid;
-    gap: 0;
-    margin-bottom: 48px;
-  }
-
-  .contact-item {
-    padding: 22px 0;
-    border-bottom: 1px solid var(--border);
-    display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: 20px;
-    align-items: center;
-  }
-
-  .contact-item:first-child { border-top: 1px solid var(--border); }
-
-  .contact-item-label {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-  }
-
-  .contact-item-value {
-    font-size: 15px;
-    color: var(--black);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .contact-item-value:hover { color: var(--ink-mid); }
-
-  .contact-form {
-    display: grid;
-    gap: 16px;
-  }
-
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .form-group label {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-  }
-
-  .form-group input,
-  .form-group textarea {
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid var(--border-strong);
-    padding: 12px 0;
-    font-family: 'Jost', sans-serif;
-    font-size: 14px;
-    font-weight: 300;
-    color: var(--black);
-    outline: none;
-    transition: border-color 0.2s;
-    resize: none;
-  }
-
-  .form-group input::placeholder,
-  .form-group textarea::placeholder {
-    color: var(--ink-light);
-  }
-
-  .form-group input:focus,
-  .form-group textarea:focus {
-    border-color: var(--black);
-  }
-
-  .form-group textarea { min-height: 80px; }
-
-  .form-submit {
-    width: 100%;
-    padding: 16px;
-    background: var(--black);
-    color: var(--beige);
-    font-family: 'Jost', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s;
-    margin-top: 8px;
-  }
-
-  .form-submit:hover { background: var(--ink); }
-
-  .form-success {
-    display: none;
-    padding: 16px;
-    background: rgba(14,14,14,0.05);
-    border-left: 2px solid var(--black);
-    font-size: 13px;
-    color: var(--ink-mid);
-  }
-
-  /* FOOTER */
-  footer {
-    padding: 32px 48px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-
-  .footer-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
-    font-weight: 400;
-    color: var(--black);
-  }
-
-  .footer-copy {
-    font-size: 11px;
-    color: var(--ink-light);
-    letter-spacing: 0.05em;
-  }
-
-  /* FADE IN ANIMATIONS */
-  .fade-in {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  body.js-ready .fade-in {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  body.js-ready .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .fade-in-delay-1 { transition-delay: 0.1s; }
-  .fade-in-delay-2 { transition-delay: 0.2s; }
-  .fade-in-delay-3 { transition-delay: 0.3s; }
-  .fade-in-delay-4 { transition-delay: 0.4s; }
-
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    nav { padding: 20px 24px; }
-    nav.scrolled { padding: 14px 24px; }
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-
-    .hero { min-height: auto; padding: 100px 24px 60px; }
-    .hero-scroll { display: none; }
-
-    .divider { margin: 0 24px; }
-    section { padding: 72px 24px; }
-
-    .services-grid { grid-template-columns: 1fr; }
-    .service-item { border-right: none; border-bottom: 1px solid rgba(242,237,227,0.1); }
-    .service-item:last-child { border-bottom: none; }
-
-    .process-grid { grid-template-columns: 1fr 1fr; }
-    .process-step:nth-child(2) { border-right: none; }
-
-    .included-grid { grid-template-columns: 1fr; gap: 60px; }
-    .included-left { padding-right: 0; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 60px; }
-    .included-right { padding-left: 0; }
-
-    .contact-grid { grid-template-columns: 1fr; gap: 60px; }
-    .form-row { grid-template-columns: 1fr; }
-
-    footer { padding: 24px; }
-  }
-
-  @media (max-width: 560px) {
-    .hero h1 { font-size: 48px; }
-    .hero-bottom { flex-direction: column; align-items: flex-start; padding-right: 0; gap: 24px; }
-    .hero-cta-group { align-items: flex-start; }
-    .price-sub { text-align: left; }
-    .process-grid { grid-template-columns: 1fr; }
-    .process-step { border-right: none; border-bottom: 1px solid var(--border); }
-    .process-step:last-child { border-bottom: none; }
-    .services-header { gap: 32px; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aleksandar — Web Dizajn</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --beige: #F2EDE3;
+      --beige-dark: #E5DDD0;
+      --beige-mid: #CFC5B4;
+      --black: #0E0E0E;
+      --black-soft: #1C1C1C;
+      --ink: #2E2A25;
+      --ink-mid: #6B6459;
+      --ink-light: #9C9288;
+      --border: rgba(14, 14, 14, 0.1);
+      --border-strong: rgba(14, 14, 14, 0.2);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--beige);
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--beige);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, padding 0.3s;
+    }
+
+    nav.scrolled {
+      border-color: var(--border);
+      padding: 16px 48px;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--black);
+    }
+
+    .nav-cta {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--beige) !important;
+      background: var(--black);
+      padding: 10px 22px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--ink) !important;
+    }
+
+    /* HAMBURGER */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--black);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+    .mobile-menu {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--beige);
+      z-index: 200;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
+    }
+
+    .mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      color: var(--black);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 48px 80px;
+      padding-top: 120px;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--beige-mid);
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 9vw, 120px);
+      font-weight: 300;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      max-width: 900px;
+      margin-bottom: 48px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--ink-mid);
+    }
+
+    .hero-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding-right: 80px;
+    }
+
+    .hero-desc {
+      max-width: 400px;
+      font-size: 15px;
+      color: var(--ink-mid);
+      line-height: 1.75;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 16px;
+    }
+
+    .price-tag {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--black);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .price-sub {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      text-align: right;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 260px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--beige);
+      background: var(--black);
+      padding: 16px 36px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--ink);
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border-strong);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      color: var(--black);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      right: 48px;
+      bottom: 80px;
+      writing-mode: vertical-rl;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-scroll::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 48px;
+      background: var(--beige-mid);
+    }
+
+    /* DIVIDER LINE */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 48px;
+    }
+
+    /* SECTION BASE */
+    section {
+      padding: 100px 48px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 60px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* SERVICES */
+    #usluge {
+      background: var(--black);
+    }
+
+    #usluge .section-label {
+      color: rgba(242, 237, 227, 0.3);
+    }
+
+    #usluge .section-label::after {
+      background: rgba(242, 237, 227, 0.1);
+    }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 60px;
+      margin-bottom: 80px;
+      flex-wrap: wrap;
+    }
+
+    .services-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--beige);
+      letter-spacing: -0.01em;
+      max-width: 500px;
+    }
+
+    .services-title em {
+      font-style: italic;
+      color: var(--beige-mid);
+    }
+
+    .services-intro {
+      max-width: 340px;
+      font-size: 14px;
+      color: rgba(242, 237, 227, 0.5);
+      line-height: 1.8;
+      padding-top: 8px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid rgba(242, 237, 227, 0.1);
+    }
+
+    .service-item {
+      padding: 40px 36px;
+      border-right: 1px solid rgba(242, 237, 227, 0.1);
+      position: relative;
+      transition: background 0.3s;
+    }
+
+    .service-item:last-child {
+      border-right: none;
+    }
+
+    .service-item:hover {
+      background: rgba(242, 237, 227, 0.03);
+    }
+
+    .service-num {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: rgba(242, 237, 227, 0.25);
+      margin-bottom: 28px;
+    }
+
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--beige);
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .service-desc {
+      font-size: 13px;
+      color: rgba(242, 237, 227, 0.45);
+      line-height: 1.7;
+    }
+
+    .service-price {
+      margin-top: 28px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--beige);
+      letter-spacing: -0.01em;
+    }
+
+    .service-price span {
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(242, 237, 227, 0.3);
+      letter-spacing: 0.08em;
+      margin-left: 4px;
+    }
+
+    /* PROCESS */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+      margin-top: 0;
+    }
+
+    .process-step {
+      padding: 40px 32px;
+      border-right: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+
+    .process-step:last-child {
+      border-right: none;
+    }
+
+    .process-step:hover {
+      background: rgba(14, 14, 14, 0.03);
+    }
+
+    .process-step-num {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--ink-light);
+      margin-bottom: 24px;
+    }
+
+    .process-step-icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 20px;
+      opacity: 0.4;
+    }
+
+    .process-step-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--black);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .process-step-desc {
+      font-size: 13px;
+      color: var(--ink-mid);
+      line-height: 1.65;
+    }
+
+    .process-step-time {
+      margin-top: 20px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    /* WHAT'S INCLUDED */
+    .included-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .included-left {
+      padding-right: 80px;
+      border-right: 1px solid var(--border);
+    }
+
+    .included-right {
+      padding-left: 80px;
+    }
+
+    .included-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--black);
+      letter-spacing: -0.01em;
+      margin-bottom: 40px;
+    }
+
+    .included-title em {
+      font-style: italic;
+      color: var(--ink-mid);
+    }
+
+    .included-list {
+      list-style: none;
+      display: grid;
+      gap: 0;
+    }
+
+    .included-list li {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--ink-mid);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .included-list li::before {
+      content: '';
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--black);
+      flex-shrink: 0;
+    }
+
+    .included-cta {
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .big-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 300;
+      color: var(--black);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .big-price-note {
+      font-size: 12px;
+      color: var(--ink-light);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ABOUT / CONTACT */
+    #kontakt {
+      background: var(--beige-dark);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 68px);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--black);
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+    }
+
+    .contact-title em {
+      font-style: italic;
+      color: var(--ink-mid);
+    }
+
+    .contact-bio {
+      font-size: 15px;
+      color: var(--ink-mid);
+      line-height: 1.8;
+      margin-bottom: 40px;
+      max-width: 420px;
+    }
+
+    .contact-items {
+      display: grid;
+      gap: 0;
+      margin-bottom: 48px;
+    }
+
+    .contact-item {
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .contact-item:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-item-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    .contact-item-value {
+      font-size: 15px;
+      color: var(--black);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-item-value:hover {
+      color: var(--ink-mid);
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border-strong);
+      padding: 12px 0;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.2s;
+      resize: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--ink-light);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--black);
+    }
+
+    .form-group textarea {
+      min-height: 80px;
+    }
+
+    .form-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--black);
+      color: var(--beige);
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 8px;
+    }
+
+    .form-submit:hover {
+      background: var(--ink);
+    }
+
+    .form-success {
+      display: none;
+      padding: 16px;
+      background: rgba(14, 14, 14, 0.05);
+      border-left: 2px solid var(--black);
+      font-size: 13px;
+      color: var(--ink-mid);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 32px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--black);
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: var(--ink-light);
+      letter-spacing: 0.05em;
+    }
+
+    /* FADE IN ANIMATIONS */
+    .fade-in {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    body.js-ready .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    body.js-ready .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in-delay-1 {
+      transition-delay: 0.1s;
+    }
+
+    .fade-in-delay-2 {
+      transition-delay: 0.2s;
+    }
+
+    .fade-in-delay-3 {
+      transition-delay: 0.3s;
+    }
+
+    .fade-in-delay-4 {
+      transition-delay: 0.4s;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav {
+        padding: 20px 24px;
+      }
+
+      nav.scrolled {
+        padding: 14px 24px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 100px 24px 60px;
+      }
+
+      .hero-scroll {
+        display: none;
+      }
+
+      .divider {
+        margin: 0 24px;
+      }
+
+      section {
+        padding: 72px 24px;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .service-item {
+        border-right: none;
+        border-bottom: 1px solid rgba(242, 237, 227, 0.1);
+      }
+
+      .service-item:last-child {
+        border-bottom: none;
+      }
+
+      .process-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .process-step:nth-child(2) {
+        border-right: none;
+      }
+
+      .included-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+
+      .included-left {
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 60px;
+      }
+
+      .included-right {
+        padding-left: 0;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        padding: 24px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero h1 {
+        font-size: 48px;
+      }
+
+      .hero-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-right: 0;
+        gap: 24px;
+      }
+
+      .hero-cta-group {
+        align-items: flex-start;
+      }
+
+      .price-sub {
+        text-align: left;
+      }
+
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-step {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .process-step:last-child {
+        border-bottom: none;
+      }
+
+      .services-header {
+        gap: 32px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<script>
-function closeMenu() {
-  var h = document.getElementById('hamburger');
-  var m = document.getElementById('mobileMenu');
-  if (h) h.classList.remove('open');
-  if (m) m.classList.remove('open');
-  document.body.style.overflow = '';
-}
-function toggleMenu() {
-  var h = document.getElementById('hamburger');
-  var m = document.getElementById('mobileMenu');
-  if (!h || !m) return;
-  if (m.classList.contains('open')) {
-    h.classList.remove('open');
-    m.classList.remove('open');
-    document.body.style.overflow = '';
-  } else {
-    h.classList.add('open');
-    m.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-}
-</script>
-
-<!-- NAV -->
-<nav id="navbar">
-  <a href="#" class="nav-logo">Aleksandar</a>
-  <ul class="nav-links">
-    <li><a href="#usluge">Usluge</a></li>
-    <li><a href="#proces">Proces</a></li>
-    <li><a href="#ukljuceno">Šta dobijate</a></li>
-    <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
-  </ul>
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu" style="position:relative;z-index:300;">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <button onclick="closeMenu()" style="position:absolute;top:28px;right:28px;background:none;border:none;cursor:pointer;padding:8px;display:flex;flex-direction:column;gap:0;align-items:center;justify-content:center;">
-    <span style="display:block;width:24px;height:1px;background:var(--black);transform:rotate(45deg);margin-bottom:-1px;"></span>
-    <span style="display:block;width:24px;height:1px;background:var(--black);transform:rotate(-45deg);"></span>
-  </button>
-  <a href="#usluge" class="mobile-link" onclick="closeMenu()">Usluge</a>
-  <a href="#proces" class="mobile-link" onclick="closeMenu()">Proces</a>
-  <a href="#ukljuceno" class="mobile-link" onclick="closeMenu()">Šta dobijate</a>
-  <a href="#kontakt" class="mobile-link" onclick="closeMenu()">Kontakt</a>
-</div>
-
-<!-- HERO -->
-<section class="hero" id="top">
-  <div class="hero-eyebrow fade-in">Web dizajn za lokalne firme</div>
-  <h1 class="fade-in fade-in-delay-1">
-    Vaša firma<br>
-    zaslužuje sajt koji<br>
-    <em>radi za vas.</em>
-  </h1>
-  <div class="hero-bottom fade-in fade-in-delay-2">
-    <p class="hero-desc">Pravim profesionalne, brze i moderne sajtove za firme u na Balkanu. Bez komplikacija, bez skrivenih troškova — samo sajt koji donosi nove klijente.</p>
-    <div class="hero-cta-group">
-      <div class="price-tag">€500</div>
-      <div class="price-sub">Kompletan sajt · Isporuka 5–7 dana</div>
-      <a href="#kontakt" class="btn-primary" style="margin-top:8px;">Poručite sajt</a>
-    </div>
-  </div>
-  <div class="hero-scroll">Skroluj</div>
-</section>
-
-<div class="divider"></div>
-
-<!-- SERVICES -->
-<section id="usluge">
-  <div class="section-label">Usluge</div>
-  <div class="services-header">
-    <h2 class="services-title fade-in">Sve što vaša<br>firma <em>treba</em><br>online.</h2>
-    <p class="services-intro fade-in">Svaki sajt koji pravim je jedinstven, dizajniran za vašu firmu i optimizovan da privlači klijente koji traže baš to što vi nudite.</p>
-  </div>
-  <div class="services-grid">
-    <div class="service-item fade-in">
-      <div class="service-num">01</div>
-      <div class="service-name">Starter sajt</div>
-      <div class="service-desc">Do 5 stranica. Dizajn, mobilna verzija, kontakt forma, Google Maps, osnovna SEO optimizacija. Sve što jedna firma treba da bude pronađena online.</div>
-      <div class="service-price">€500 <span>/ sajt · 5–7 dana</span></div>
-    </div>
-    <div class="service-item fade-in fade-in-delay-1">
-      <div class="service-num">02</div>
-      <div class="service-name">Mesečno održavanje</div>
-      <div class="service-desc">Ažuriranje sadržaja, izmene tekstova i fotografija, tehnička podrška. Vaš sajt ostaje uvek svež bez da vi morate da brinete o tome.</div>
-      <div class="service-price">€50–100 <span>/ mesec</span></div>
-    </div>
-    <div class="service-item fade-in fade-in-delay-2">
-      <div class="service-num">03</div>
-      <div class="service-name">Refresh starog sajta</div>
-      <div class="service-desc">Imate sajt koji izgleda zastarelo ili se ne učitava dobro na mobilnom? Renoviramo ga — novi dizajn, brže učitavanje, moderan izgled.</div>
-      <div class="service-price">Dogovor</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- PROCESS -->
-<section id="proces">
-  <div class="section-label">Kako radimo</div>
-  <div class="process-grid">
-    <div class="process-step fade-in">
-      <div class="process-step-num">01</div>
-      <div class="process-step-title">Razgovor</div>
-      <div class="process-step-desc">Javite se putem WhatsApp ili emaila. Porazgovaramo o vašoj firmi, šta vam treba i kako vaš sajt treba da izgleda.</div>
-      <div class="process-step-time">Dan 1</div>
-    </div>
-    <div class="process-step fade-in fade-in-delay-1">
-      <div class="process-step-num">02</div>
-      <div class="process-step-title">Dogovor i uplata</div>
-      <div class="process-step-desc">30% unapred (€150) i kreće se sa radom. Vi šaljete logo, fotografije i tekst o firmi — mi se brinemo za sve ostalo.</div>
-      <div class="process-step-time">Dan 1–2</div>
-    </div>
-    <div class="process-step fade-in fade-in-delay-2">
-      <div class="process-step-num">03</div>
-      <div class="process-step-title">Izrada</div>
-      <div class="process-step-desc">Gradim vaš sajt. Pošaljem vam link za pregled pre nego što ode na internet. Jedna runda izmena je uključena.</div>
-      <div class="process-step-time">Dan 2–5</div>
-    </div>
-    <div class="process-step fade-in fade-in-delay-3">
-      <div class="process-step-num">04</div>
-      <div class="process-step-title">Lansiranje</div>
-      <div class="process-step-desc">Sajt ide na vaš domen. Plaća se ostatak (€350). Pomažem vam i sa domenom ako ga nemate. Sajt je vaš.</div>
-      <div class="process-step-time">Dan 5–7</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- WHAT'S INCLUDED -->
-<section id="ukljuceno">
-  <div class="section-label">Šta je uključeno</div>
-  <div class="included-grid">
-    <div class="included-left fade-in">
-      <h2 class="included-title">Za €500<br>dobijate <em>gotov<br>biznis online.</em></h2>
-      <p style="font-size:14px; color:var(--ink-mid); line-height:1.8; margin-bottom:32px;">Nema skrivenih troškova. Cena pokriva kompletan dizajn i razvoj. Jedini dodatan trošak koji plaćate direktno je domen (~€10/godišnje) ako ga nemate.</p>
-      <ul class="included-list">
-        <li>Do 7 stranica (Početna, O nama, Usluge, Galerija, Kontakt...)</li>
-        <li>Mobilni responzivni dizajn</li>
-        <li>Kontakt forma i Google Maps embed</li>
-        <li>SEO optimizacija za lokalne pretrage</li>
-        <li>Brzo učitavanje</li>
-        <li>Pomoć pri registraciji domena</li>
-        <li>Besplatna tehnička podrška 30 dana</li>
-      </ul>
-    </div>
-    <div class="included-right fade-in fade-in-delay-1">
-      <div class="big-price">€500</div>
-      <div class="big-price-note" style="margin:12px 0 40px;">Fiksna cena · Bez iznenađenja</div>
-      <p style="font-size:14px; color:var(--ink-mid); line-height:1.8; margin-bottom:32px; max-width:360px;">Svaki mesec hiljade ljudi u vašem gradu traži vaš tip usluge na Google-u. Bez sajta — oni odlaze kod konkurencije. Avans je svega €150 (30%) — ostatak plaćate tek kad vidite gotov sajt.</p>
-      <div class="included-cta">
-        <a href="#kontakt" class="btn-primary">Poručite vaš sajt</a>
-        <a href="https://wa.me/381605339990" class="btn-secondary" target="_blank">Pišite na WhatsApp →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- CONTACT -->
-<section id="kontakt">
-  <div class="section-label">Kontakt</div>
-  <div class="contact-grid">
-    <div class="contact-left fade-in">
-      <h2 class="contact-title">Hajde da<br><em>napravimo</em><br>nešto.</h2>
-      <p class="contact-bio">Zovem se Aleksandar. Student sam i web dizajner iz Beograda. Pravim sajtove za lokalne firme — brzo, kvalitetno i po razumnoj ceni. Svaki sajt pristupam ozbiljno jer znam da je to vaše lice na internetu.</p>
-      <div class="contact-items">
-        <div class="contact-item">
-          <span class="contact-item-label">Email</span>
-          <a href="#" onclick="this.href='mailto:'+'lesamladenovicc'+'@'+'gmail.com'; return true;" class="contact-item-value" id="emailLink">lesamladenovicc&#64;gmail.com</a>
-        </div>
-        <div class="contact-item">
-          <span class="contact-item-label">Telefon</span>
-          <a href="tel:+381605339990" class="contact-item-value">+381 60 533 9990</a>
-        </div>
-        <div class="contact-item">
-          <span class="contact-item-label">WhatsApp</span>
-          <a href="https://wa.me/381605339990" class="contact-item-value" target="_blank">+381 60 533 9990</a>
-        </div>
-        <div class="contact-item">
-          <span class="contact-item-label">Instagram</span>
-          <a href="https://instagram.com/alle5x1" class="contact-item-value" target="_blank">@alle5x1</a>
-        </div>
-      </div>
-    </div>
-    <div class="contact-right fade-in fade-in-delay-1">
-      <form class="contact-form" id="contactForm" action="https://formspree.io/f/mzdkeraq" method="POST">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Vaše ime</label>
-            <input type="text" placeholder="Marko Marković" required>
-          </div>
-          <div class="form-group">
-            <label>Firma</label>
-            <input type="text" placeholder="Naziv firme">
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Telefon ili email</label>
-          <input type="text" placeholder="+381 6x xxx xxxx" required>
-        </div>
-        <div class="form-group">
-          <label>Tip biznisa</label>
-          <input type="text" placeholder="Restoran, salon, auto servis...">
-        </div>
-        <div class="form-group">
-          <label>Poruka (opciono)</label>
-          <textarea placeholder="Šta vam treba od sajta?"></textarea>
-        </div>
-        <button type="submit" class="form-submit">Pošaljite upit</button>
-        <div class="form-success" id="formSuccess">
-          Hvala! Javim se u roku od 24 sata.
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-name">Aleksandar Mladenović</div>
-  <div class="footer-copy">© 2026 · allex.website · Web dizajn · Beograd, Srbija</div>
-</footer>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
-  });
-
-  function closeMenu() {
-    document.getElementById('hamburger').classList.remove('open');
-    document.getElementById('mobileMenu').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  function toggleMenu() {
-    const h = document.getElementById('hamburger');
-    const m = document.getElementById('mobileMenu');
-    const isOpen = m.classList.contains('open');
-    if (isOpen) {
-      h.classList.remove('open');
-      m.classList.remove('open');
+  <script>
+    function closeMenu() {
+      var h = document.getElementById('hamburger');
+      var m = document.getElementById('mobileMenu');
+      if (h) h.classList.remove('open');
+      if (m) m.classList.remove('open');
       document.body.style.overflow = '';
-    } else {
-      h.classList.add('open');
-      m.classList.add('open');
-      document.body.style.overflow = 'hidden';
     }
-  }
-
-  document.body.classList.add('js-ready');
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-  }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
-
-  document.querySelectorAll('.fade-in').forEach(el => {
-    if (el.closest('.hero')) {
-      el.classList.add('visible');
-    } else {
-      observer.observe(el);
-    }
-  });
-
-  document.getElementById('contactForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const btn = this.querySelector('.form-submit');
-    btn.textContent = 'Šaljem...';
-    btn.disabled = true;
-    const data = new FormData(this);
-    try {
-      const res = await fetch(this.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
-      if (res.ok) {
-        btn.style.display = 'none';
-        document.getElementById('formSuccess').style.display = 'block';
-        this.reset();
+    function toggleMenu() {
+      var h = document.getElementById('hamburger');
+      var m = document.getElementById('mobileMenu');
+      if (!h || !m) return;
+      if (m.classList.contains('open')) {
+        h.classList.remove('open');
+        m.classList.remove('open');
+        document.body.style.overflow = '';
       } else {
+        h.classList.add('open');
+        m.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+  </script>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">Aleksandar</a>
+    <ul class="nav-links">
+      <li><a href="#usluge">Usluge</a></li>
+      <li><a href="#proces">Proces</a></li>
+      <li><a href="#ukljuceno">Šta dobijate</a></li>
+      <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu"
+      style="position:relative;z-index:300;">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button onclick="closeMenu()"
+      style="position:absolute;top:28px;right:28px;background:none;border:none;cursor:pointer;padding:8px;display:flex;flex-direction:column;gap:0;align-items:center;justify-content:center;">
+      <span
+        style="display:block;width:24px;height:1px;background:var(--black);transform:rotate(45deg);margin-bottom:-1px;"></span>
+      <span style="display:block;width:24px;height:1px;background:var(--black);transform:rotate(-45deg);"></span>
+    </button>
+    <a href="#usluge" class="mobile-link" onclick="closeMenu()">Usluge</a>
+    <a href="#proces" class="mobile-link" onclick="closeMenu()">Proces</a>
+    <a href="#ukljuceno" class="mobile-link" onclick="closeMenu()">Šta dobijate</a>
+    <a href="#kontakt" class="mobile-link" onclick="closeMenu()">Kontakt</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-eyebrow fade-in">Web dizajn za lokalne firme</div>
+    <h1 class="fade-in fade-in-delay-1">
+      Vaša firma<br>
+      zaslužuje sajt koji<br>
+      <em>radi za vas.</em>
+    </h1>
+    <div class="hero-bottom fade-in fade-in-delay-2">
+      <p class="hero-desc">Pravim profesionalne, brze i moderne sajtove za firme na Balkanu. Bez komplikacija, bez
+        skrivenih troškova — samo sajt koji donosi nove klijente.</p>
+      <div class="hero-cta-group">
+        <div class="price-tag">€500</div>
+        <div class="price-sub">Kompletan sajt · Isporuka 5–7 dana</div>
+        <a href="#kontakt" class="btn-primary" style="margin-top:8px;">Poručite sajt</a>
+      </div>
+    </div>
+    <div class="hero-scroll">Skroluj</div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SERVICES -->
+  <section id="usluge">
+    <div class="section-label">Usluge</div>
+    <div class="services-header">
+      <h2 class="services-title fade-in">Sve što vaša<br>firma <em>treba</em><br>online.</h2>
+      <p class="services-intro fade-in">Svaki sajt koji pravim je jedinstven, dizajniran za vašu firmu i optimizovan da
+        privlači klijente koji traže baš to što vi nudite.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-item fade-in">
+        <div class="service-num">01</div>
+        <div class="service-name">Starter sajt</div>
+        <div class="service-desc">Do 5 stranica. Dizajn, mobilna verzija, kontakt forma, Google Maps, osnovna SEO
+          optimizacija. Sve što jedna firma treba da bude pronađena online.</div>
+        <div class="service-price">€500 <span>/ sajt · 5–7 dana</span></div>
+      </div>
+      <div class="service-item fade-in fade-in-delay-1">
+        <div class="service-num">02</div>
+        <div class="service-name">Mesečno održavanje</div>
+        <div class="service-desc">Ažuriranje sadržaja, izmene tekstova i fotografija, tehnička podrška. Vaš sajt ostaje
+          uvek svež bez da vi morate da brinete o tome.</div>
+        <div class="service-price">€50–100 <span>/ mesec</span></div>
+      </div>
+      <div class="service-item fade-in fade-in-delay-2">
+        <div class="service-num">03</div>
+        <div class="service-name">Refresh starog sajta</div>
+        <div class="service-desc">Imate sajt koji izgleda zastarelo ili se ne učitava dobro na mobilnom? Renoviramo ga —
+          novi dizajn, brže učitavanje, moderan izgled.</div>
+        <div class="service-price">Dogovor</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROCESS -->
+  <section id="proces">
+    <div class="section-label">Kako radimo</div>
+    <div class="process-grid">
+      <div class="process-step fade-in">
+        <div class="process-step-num">01</div>
+        <div class="process-step-title">Razgovor</div>
+        <div class="process-step-desc">Javite se putem WhatsApp ili emaila. Porazgovaramo o vašoj firmi, šta vam treba i
+          kako vaš sajt treba da izgleda.</div>
+        <div class="process-step-time">Dan 1</div>
+      </div>
+      <div class="process-step fade-in fade-in-delay-1">
+        <div class="process-step-num">02</div>
+        <div class="process-step-title">Dogovor i uplata</div>
+        <div class="process-step-desc">30% unapred (€150) i kreće se sa radom. Vi šaljete logo, fotografije i tekst o
+          firmi — mi se brinemo za sve ostalo.</div>
+        <div class="process-step-time">Dan 1–2</div>
+      </div>
+      <div class="process-step fade-in fade-in-delay-2">
+        <div class="process-step-num">03</div>
+        <div class="process-step-title">Izrada</div>
+        <div class="process-step-desc">Gradim vaš sajt. Pošaljem vam link za pregled pre nego što ode na internet. Jedna
+          runda izmena je uključena.</div>
+        <div class="process-step-time">Dan 2–5</div>
+      </div>
+      <div class="process-step fade-in fade-in-delay-3">
+        <div class="process-step-num">04</div>
+        <div class="process-step-title">Lansiranje</div>
+        <div class="process-step-desc">Sajt ide na vaš domen. Plaća se ostatak (€350). Pomažem vam i sa domenom ako ga
+          nemate. Sajt je vaš.</div>
+        <div class="process-step-time">Dan 5–7</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WHAT'S INCLUDED -->
+  <section id="ukljuceno">
+    <div class="section-label">Šta je uključeno</div>
+    <div class="included-grid">
+      <div class="included-left fade-in">
+        <h2 class="included-title">Za €500<br>dobijate <em>gotov<br>biznis online.</em></h2>
+        <p style="font-size:14px; color:var(--ink-mid); line-height:1.8; margin-bottom:32px;">Nema skrivenih troškova.
+          Cena pokriva kompletan dizajn i razvoj. Jedini dodatan trošak koji plaćate direktno je domen (~€10/godišnje)
+          ako ga nemate.</p>
+        <ul class="included-list">
+          <li>Do 7 stranica (Početna, O nama, Usluge, Galerija, Kontakt...)</li>
+          <li>Mobilni responzivni dizajn</li>
+          <li>Kontakt forma i Google Maps embed</li>
+          <li>SEO optimizacija za lokalne pretrage</li>
+          <li>Brzo učitavanje</li>
+          <li>Pomoć pri registraciji domena</li>
+          <li>Besplatna tehnička podrška 30 dana</li>
+        </ul>
+      </div>
+      <div class="included-right fade-in fade-in-delay-1">
+        <div class="big-price">€500</div>
+        <div class="big-price-note" style="margin:12px 0 40px;">Fiksna cena · Bez iznenađenja</div>
+        <p style="font-size:14px; color:var(--ink-mid); line-height:1.8; margin-bottom:32px; max-width:360px;">Svaki
+          mesec hiljade ljudi u vašem gradu traži vaš tip usluge na Google-u. Bez sajta — oni odlaze kod konkurencije.
+          Avans je svega €150 (30%) — ostatak plaćate tek kad vidite gotov sajt.</p>
+        <div class="included-cta">
+          <a href="#kontakt" class="btn-primary">Poručite vaš sajt</a>
+          <a href="https://wa.me/381605339990" class="btn-secondary" target="_blank">Pišite na WhatsApp →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section id="kontakt">
+    <div class="section-label">Kontakt</div>
+    <div class="contact-grid">
+      <div class="contact-left fade-in">
+        <h2 class="contact-title">Hajde da<br><em>napravimo</em><br>nešto.</h2>
+        <p class="contact-bio">Zovem se Aleksandar. Student sam i web dizajner iz Beograda. Pravim sajtove za lokalne
+          firme — brzo, kvalitetno i po razumnoj ceni. Svaki sajt pristupam ozbiljno jer znam da je to vaše lice na
+          internetu.</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <span class="contact-item-label">Email</span>
+            <a href="#" onclick="this.href='mailto:'+'lesamladenovicc'+'@'+'gmail.com'; return true;"
+              class="contact-item-value" id="emailLink">lesamladenovicc&#64;gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-item-label">Telefon</span>
+            <a href="tel:+381605339990" class="contact-item-value">+381 60 533 9990</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-item-label">WhatsApp</span>
+            <a href="https://wa.me/381605339990" class="contact-item-value" target="_blank">+381 60 533 9990</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-item-label">Instagram</span>
+            <a href="https://instagram.com/alle5x1" class="contact-item-value" target="_blank">@alle5x1</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-right fade-in fade-in-delay-1">
+        <form class="contact-form" id="contactForm" action="https://formspree.io/f/mzdkeraq" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Vaše ime</label>
+              <input type="text" placeholder="Marko Marković" required>
+            </div>
+            <div class="form-group">
+              <label>Firma</label>
+              <input type="text" placeholder="Naziv firme">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Telefon ili email</label>
+            <input type="text" placeholder="+381 6x xxx xxxx" required>
+          </div>
+          <div class="form-group">
+            <label>Tip biznisa</label>
+            <input type="text" placeholder="Restoran, salon, auto servis...">
+          </div>
+          <div class="form-group">
+            <label>Poruka (opciono)</label>
+            <textarea placeholder="Šta vam treba od sajta?"></textarea>
+          </div>
+          <button type="submit" class="form-submit">Pošaljite upit</button>
+          <div class="form-success" id="formSuccess">
+            Hvala! Javim se u roku od 24 sata.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Aleksandar Mladenović</div>
+    <div class="footer-copy">© 2026 · allex.website · Web dizajn · Beograd, Srbija</div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    function closeMenu() {
+      document.getElementById('hamburger').classList.remove('open');
+      document.getElementById('mobileMenu').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function toggleMenu() {
+      const h = document.getElementById('hamburger');
+      const m = document.getElementById('mobileMenu');
+      const isOpen = m.classList.contains('open');
+      if (isOpen) {
+        h.classList.remove('open');
+        m.classList.remove('open');
+        document.body.style.overflow = '';
+      } else {
+        h.classList.add('open');
+        m.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    document.body.classList.add('js-ready');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      if (el.closest('.hero')) {
+        el.classList.add('visible');
+      } else {
+        observer.observe(el);
+      }
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const btn = this.querySelector('.form-submit');
+      btn.textContent = 'Šaljem...';
+      btn.disabled = true;
+      const data = new FormData(this);
+      try {
+        const res = await fetch(this.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+        if (res.ok) {
+          btn.style.display = 'none';
+          document.getElementById('formSuccess').style.display = 'block';
+          this.reset();
+        } else {
+          btn.textContent = 'Greška — pokušajte ponovo';
+          btn.disabled = false;
+        }
+      } catch {
         btn.textContent = 'Greška — pokušajte ponovo';
         btn.disabled = false;
       }
-    } catch {
-      btn.textContent = 'Greška — pokušajte ponovo';
-      btn.disabled = false;
-    }
-  });
-
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', function(e) {
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        const offset = 80;
-        window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
-      }
     });
-  });
-</script>
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          const offset = 80;
+          window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
 </body>
+
 </html>
