@@ -1074,6 +1074,373 @@
       transform: scale(1.03);
     }
 
+    /* ============================================================
+       SCROLL PROGRESS BAR
+       ============================================================ */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(to right, var(--accent), var(--black));
+      z-index: 400;
+      transition: width 0.1s linear;
+    }
+
+    /* ============================================================
+       HERO — AVAILABILITY BADGE + CURSOR GLOW
+       ============================================================ */
+    .hero-badge {
+      position: absolute;
+      top: 128px;
+      right: 48px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 100px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      background: rgba(242, 237, 227, 0.6);
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4caf6b;
+      box-shadow: 0 0 0 0 rgba(76, 175, 107, 0.6);
+      animation: badgePulse 2.2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes badgePulse {
+      0% { box-shadow: 0 0 0 0 rgba(76, 175, 107, 0.5); }
+      70% { box-shadow: 0 0 0 8px rgba(76, 175, 107, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(76, 175, 107, 0); }
+    }
+
+    .hero-cursor-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(184, 145, 46, 0.16) 0%, transparent 70%);
+      transform: translate(calc(var(--mx, 50%) - 50%), calc(var(--my, 50%) - 50%));
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      will-change: transform;
+    }
+
+    .hero:hover .hero-cursor-glow {
+      opacity: 1;
+    }
+
+    /* ============================================================
+       SERVICE ICONS — line-draw on reveal
+       ============================================================ */
+    .service-icon {
+      width: 34px;
+      height: 34px;
+      margin-bottom: 20px;
+      color: rgba(242, 237, 227, 0.6);
+      transition: color 0.3s ease;
+    }
+
+    .service-icon path,
+    .service-icon circle,
+    .service-icon rect,
+    .service-icon line {
+      stroke-dasharray: 140;
+      stroke-dashoffset: 140;
+      transition: stroke-dashoffset 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .service-item.visible .service-icon path,
+    .service-item.visible .service-icon circle,
+    .service-item.visible .service-icon rect,
+    .service-item.visible .service-icon line {
+      stroke-dashoffset: 0;
+    }
+
+    .service-item:hover .service-icon {
+      color: var(--accent);
+    }
+
+    /* ============================================================
+       STYLE GALLERY — tilting browser mockups
+       ============================================================ */
+    #galerija {
+      background: var(--beige-dark);
+      overflow: hidden;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .gallery-card {
+      background: var(--black);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px -20px rgba(14, 14, 14, 0.35);
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+      will-change: transform;
+    }
+
+    .gallery-card:hover {
+      box-shadow: 0 28px 60px -18px rgba(14, 14, 14, 0.45);
+    }
+
+    .gallery-chrome {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .gallery-chrome span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .gallery-body {
+      padding: 26px 22px 30px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 10px;
+      position: relative;
+    }
+
+    .gallery-body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.16;
+      background: radial-gradient(circle at 30% 20%, var(--gcolor, var(--accent)), transparent 60%);
+    }
+
+    .gallery-tag {
+      position: relative;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gcolor, var(--accent));
+    }
+
+    .gallery-name {
+      position: relative;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--beige);
+      line-height: 1.15;
+    }
+
+    .gallery-bar {
+      position: relative;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(242, 237, 227, 0.12);
+      overflow: hidden;
+    }
+
+    .gallery-bar::after {
+      content: '';
+      display: block;
+      height: 100%;
+      width: 55%;
+      background: var(--gcolor, var(--accent));
+      border-radius: 3px;
+    }
+
+    .gallery-note {
+      margin-top: 28px;
+      font-size: 13px;
+      color: var(--ink-light);
+      max-width: 480px;
+    }
+
+    /* ============================================================
+       PROCESS — filling progress line
+       ============================================================ */
+    .process-wrap {
+      position: relative;
+    }
+
+    .process-progress {
+      height: 2px;
+      background: var(--border);
+      margin-bottom: -1px;
+      overflow: hidden;
+    }
+
+    .process-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, var(--accent), var(--black));
+      transition: width 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .process-progress.visible .process-progress-fill {
+      width: 100%;
+    }
+
+    /* ============================================================
+       INCLUDED LIST — staggered reveal
+       ============================================================ */
+    .included-list li {
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 0.5s ease, transform 0.5s ease, padding-left 0.25s ease, color 0.25s ease;
+    }
+
+    .included-left.visible .included-list li {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .included-left.visible .included-list li:nth-child(1) { transition-delay: 0.05s; }
+    .included-left.visible .included-list li:nth-child(2) { transition-delay: 0.12s; }
+    .included-left.visible .included-list li:nth-child(3) { transition-delay: 0.19s; }
+    .included-left.visible .included-list li:nth-child(4) { transition-delay: 0.26s; }
+    .included-left.visible .included-list li:nth-child(5) { transition-delay: 0.33s; }
+    .included-left.visible .included-list li:nth-child(6) { transition-delay: 0.4s; }
+    .included-left.visible .included-list li:nth-child(7) { transition-delay: 0.47s; }
+
+    /* ============================================================
+       MAGNETIC BUTTONS
+       ============================================================ */
+    .magnetic {
+      display: inline-block;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+
+    /* ============================================================
+       FLOATING WHATSAPP CONTACT
+       ============================================================ */
+    .float-contact {
+      position: fixed;
+      right: 28px;
+      bottom: 28px;
+      z-index: 350;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      transform: translateY(16px) scale(0.9);
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .float-contact.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: all;
+    }
+
+    .float-contact-tip {
+      background: var(--black);
+      color: var(--beige);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      padding: 8px 14px;
+      border-radius: 6px;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateX(6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .float-contact:hover .float-contact-tip {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .float-contact-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 10px 26px -8px rgba(37, 211, 102, 0.55);
+      position: relative;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      flex-shrink: 0;
+    }
+
+    .float-contact-btn::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px solid rgba(37, 211, 102, 0.5);
+      animation: floatPulse 2.6s ease-out infinite;
+    }
+
+    @keyframes floatPulse {
+      0% { transform: scale(0.9); opacity: 0.8; }
+      100% { transform: scale(1.35); opacity: 0; }
+    }
+
+    .float-contact-btn:hover {
+      transform: scale(1.08);
+    }
+
+    .float-contact-btn svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    /* ============================================================
+       COPY-EMAIL BUTTON
+       ============================================================ */
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      margin-left: 8px;
+      border: none;
+      background: transparent;
+      color: var(--ink-light);
+      cursor: pointer;
+      vertical-align: middle;
+      transition: color 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      color: var(--accent);
+    }
+
+    .copy-btn svg {
+      width: 15px;
+      height: 15px;
+    }
+
     /* REDUCED MOTION */
     @media (prefers-reduced-motion: reduce) {
 
@@ -1091,6 +1458,22 @@
       body.js-ready .fade-in-right {
         opacity: 1;
         transform: none;
+      }
+
+      .included-list li {
+        opacity: 1;
+        transform: none;
+      }
+
+      .hero-cursor-glow,
+      .hero-badge-dot::before,
+      .float-contact-btn::before {
+        display: none;
+      }
+
+      .gallery-card,
+      .magnetic {
+        transform: none !important;
       }
     }
 
@@ -1140,6 +1523,26 @@
 
       .service-item:last-child {
         border-bottom: none;
+      }
+
+      .hero-badge {
+        top: auto;
+        bottom: 100%;
+        right: 24px;
+        margin-bottom: 16px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .float-contact {
+        right: 18px;
+        bottom: 18px;
+      }
+
+      .float-contact-tip {
+        display: none;
       }
 
       .process-grid {
@@ -1245,11 +1648,14 @@
     }
   </script>
 
+  <div class="scroll-progress" id="scrollProgress"></div>
+
   <!-- NAV -->
   <nav id="navbar">
     <a href="#" class="nav-logo">Aleksandar</a>
     <ul class="nav-links">
       <li><a href="#usluge">Services</a></li>
+      <li><a href="#galerija">Craft</a></li>
       <li><a href="#proces">Process</a></li>
       <li><a href="#ukljuceno">What You Get</a></li>
       <li><a href="#kontakt" class="nav-cta">Contact</a></li>
@@ -1269,6 +1675,7 @@
       <span style="display:block;width:24px;height:1px;background:var(--black);transform:rotate(-45deg);"></span>
     </button>
     <a href="#usluge" class="mobile-link" onclick="closeMenu()">Services</a>
+    <a href="#galerija" class="mobile-link" onclick="closeMenu()">Craft</a>
     <a href="#proces" class="mobile-link" onclick="closeMenu()">Process</a>
     <a href="#ukljuceno" class="mobile-link" onclick="closeMenu()">What You Get</a>
     <a href="#kontakt" class="mobile-link" onclick="closeMenu()">Contact</a>
@@ -1276,6 +1683,11 @@
 
   <!-- HERO -->
   <section class="hero" id="top">
+    <div class="hero-cursor-glow" id="heroCursorGlow"></div>
+    <div class="hero-badge fade-in">
+      <span class="hero-badge-dot"></span>
+      Available for new projects
+    </div>
     <div class="hero-eyebrow fade-in">Web design for local businesses</div>
     <h1 class="fade-in fade-in-delay-1">
       Your business<br>
@@ -1288,7 +1700,7 @@
       <div class="hero-cta-group">
         <div class="price-tag">$1,000</div>
         <div class="price-sub">Complete website · Delivered in 5–7 days</div>
-        <a href="#kontakt" class="btn-primary" style="margin-top:8px;">Order Your Site</a>
+        <span class="magnetic" data-magnetic style="margin-top:8px;"><a href="#kontakt" class="btn-primary">Order Your Site</a></span>
       </div>
     </div>
     <div class="hero-scroll">Scroll</div>
@@ -1306,6 +1718,12 @@
     </div>
     <div class="services-grid">
       <div class="service-item fade-in">
+        <svg class="service-icon" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="6" width="28" height="22" rx="2"/>
+          <line x1="3" y1="12" x2="31" y2="12"/>
+          <circle cx="7" cy="9" r="0.8" fill="currentColor" stroke="none"/>
+          <circle cx="10.5" cy="9" r="0.8" fill="currentColor" stroke="none"/>
+        </svg>
         <div class="service-num">01</div>
         <div class="service-name">Starter Website</div>
         <div class="service-desc">Up to 5 pages. Design, mobile version, contact form, Google Maps, basic SEO
@@ -1313,6 +1731,9 @@
         <div class="service-price">$1,000 <span>/ site · 5–7 days</span></div>
       </div>
       <div class="service-item fade-in fade-in-delay-1">
+        <svg class="service-icon" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 6a6 6 0 0 0-8.2 7.1L4.5 22.4a2.1 2.1 0 0 0 3 3l9.3-9.3A6 6 0 0 0 24.1 9.9l-3.8 3.8-2.9-2.9 3.8-3.8L22 6Z"/>
+        </svg>
         <div class="service-num">02</div>
         <div class="service-name">Monthly Maintenance</div>
         <div class="service-desc">Content updates, text and photo changes, technical support. Your site stays fresh
@@ -1320,6 +1741,10 @@
         <div class="service-price">$50–100 <span>/ month</span></div>
       </div>
       <div class="service-item fade-in fade-in-delay-2">
+        <svg class="service-icon" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M27 17a10 10 0 1 1-3-7.1"/>
+          <path d="M27 4v6h-6"/>
+        </svg>
         <div class="service-num">03</div>
         <div class="service-name">Website Refresh</div>
         <div class="service-desc">Have a site that looks outdated or doesn't load well on mobile? I'll renovate it —
@@ -1331,37 +1756,78 @@
 
   <div class="divider"></div>
 
+  <!-- STYLE GALLERY -->
+  <section id="galerija">
+    <div class="section-label">The Craft</div>
+    <h2 class="included-title fade-in" style="margin-bottom:16px;">A taste of what's <em>possible.</em></h2>
+    <p class="gallery-note fade-in">Every site gets its own palette, typography, and layout — never a template. Here's
+      the range: three business types, three completely different directions.</p>
+    <div class="gallery-grid" style="margin-top:48px;" id="galleryGrid">
+      <div class="gallery-card fade-in" data-tilt style="--gcolor:#C7743B;">
+        <div class="gallery-chrome"><span></span><span></span><span></span></div>
+        <div class="gallery-body">
+          <div class="gallery-tag">Restaurant</div>
+          <div class="gallery-name">Warm, appetite-driven, image-forward.</div>
+          <div class="gallery-bar"></div>
+        </div>
+      </div>
+      <div class="gallery-card fade-in fade-in-delay-1" data-tilt style="--gcolor:#B8912E;">
+        <div class="gallery-chrome"><span></span><span></span><span></span></div>
+        <div class="gallery-body">
+          <div class="gallery-tag">Beauty Salon</div>
+          <div class="gallery-name">Soft, editorial, elegant whitespace.</div>
+          <div class="gallery-bar"></div>
+        </div>
+      </div>
+      <div class="gallery-card fade-in fade-in-delay-2" data-tilt style="--gcolor:#4C7A93;">
+        <div class="gallery-chrome"><span></span><span></span><span></span></div>
+        <div class="gallery-body">
+          <div class="gallery-tag">Auto Shop</div>
+          <div class="gallery-name">Bold, technical, trust-building.</div>
+          <div class="gallery-bar"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- PROCESS -->
   <section id="proces">
     <div class="section-label">How I Work</div>
-    <div class="process-grid">
-      <div class="process-step fade-in">
-        <div class="process-step-num">01</div>
-        <div class="process-step-title">Consultation</div>
-        <div class="process-step-desc">Reach out via WhatsApp or email. We'll talk about your business, what you need,
-          and how your site should look.</div>
-        <div class="process-step-time">Day 1</div>
+    <div class="process-wrap">
+      <div class="process-progress" id="processProgress">
+        <div class="process-progress-fill"></div>
       </div>
-      <div class="process-step fade-in fade-in-delay-1">
-        <div class="process-step-num">02</div>
-        <div class="process-step-title">Agreement & Deposit</div>
-        <div class="process-step-desc">$300 upfront and work begins. You send your logo, photos, and business info —
-          I take care of everything else.</div>
-        <div class="process-step-time">Day 1–2</div>
-      </div>
-      <div class="process-step fade-in fade-in-delay-2">
-        <div class="process-step-num">03</div>
-        <div class="process-step-title">Development</div>
-        <div class="process-step-desc">I build your site and send you a preview link before it goes live. One round
-          of revisions is included.</div>
-        <div class="process-step-time">Day 2–5</div>
-      </div>
-      <div class="process-step fade-in fade-in-delay-3">
-        <div class="process-step-num">04</div>
-        <div class="process-step-title">Launch</div>
-        <div class="process-step-desc">Your site goes live on your domain. The remaining $700 is due. I'll help with
-          the domain too if you don't have one. The site is yours.</div>
-        <div class="process-step-time">Day 5–7</div>
+      <div class="process-grid">
+        <div class="process-step fade-in">
+          <div class="process-step-num">01</div>
+          <div class="process-step-title">Consultation</div>
+          <div class="process-step-desc">Reach out via WhatsApp or email. We'll talk about your business, what you
+            need, and how your site should look.</div>
+          <div class="process-step-time">Day 1</div>
+        </div>
+        <div class="process-step fade-in fade-in-delay-1">
+          <div class="process-step-num">02</div>
+          <div class="process-step-title">Agreement & Deposit</div>
+          <div class="process-step-desc">$300 upfront and work begins. You send your logo, photos, and business
+            info — I take care of everything else.</div>
+          <div class="process-step-time">Day 1–2</div>
+        </div>
+        <div class="process-step fade-in fade-in-delay-2">
+          <div class="process-step-num">03</div>
+          <div class="process-step-title">Development</div>
+          <div class="process-step-desc">I build your site and send you a preview link before it goes live. One
+            round of revisions is included.</div>
+          <div class="process-step-time">Day 2–5</div>
+        </div>
+        <div class="process-step fade-in fade-in-delay-3">
+          <div class="process-step-num">04</div>
+          <div class="process-step-title">Launch</div>
+          <div class="process-step-desc">Your site goes live on your domain. The remaining $700 is due. I'll help
+            with the domain too if you don't have one. The site is yours.</div>
+          <div class="process-step-time">Day 5–7</div>
+        </div>
       </div>
     </div>
   </section>
@@ -1394,7 +1860,7 @@
           month thousands of people in your city search for your type of service on Google. Without a site — they go
           to your competitors. The deposit is just $300 — you pay the rest ($700) only once your site is live.</p>
         <div class="included-cta">
-          <a href="#kontakt" class="btn-primary">Order Your Website</a>
+          <span class="magnetic" data-magnetic><a href="#kontakt" class="btn-primary">Order Your Website</a></span>
           <a href="https://wa.me/381605339990" class="btn-secondary" target="_blank">Message on WhatsApp →</a>
         </div>
       </div>
@@ -1415,8 +1881,16 @@
         <div class="contact-items">
           <div class="contact-item">
             <span class="contact-item-label">Email</span>
-            <a href="#" onclick="this.href='mailto:'+'lesamladenovicc'+'@'+'gmail.com'; return true;"
-              class="contact-item-value" id="emailLink">lesamladenovicc&#64;gmail.com</a>
+            <span>
+              <a href="#" onclick="this.href='mailto:'+'lesamladenovicc'+'@'+'gmail.com'; return true;"
+                class="contact-item-value" id="emailLink">lesamladenovicc&#64;gmail.com</a>
+              <button type="button" class="copy-btn" id="copyEmailBtn" aria-label="Copy email address" title="Copy email">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="12" height="12" rx="2"/>
+                  <path d="M5 15V5a2 2 0 0 1 2-2h10"/>
+                </svg>
+              </button>
+            </span>
           </div>
           <div class="contact-item">
             <span class="contact-item-label">Phone</span>
@@ -1464,6 +1938,16 @@
       </div>
     </div>
   </section>
+
+  <!-- FLOATING WHATSAPP -->
+  <div class="float-contact" id="floatContact">
+    <span class="float-contact-tip">Chat on WhatsApp</span>
+    <a href="https://wa.me/381605339990" class="float-contact-btn" target="_blank" aria-label="Chat on WhatsApp">
+      <svg viewBox="0 0 32 32" fill="currentColor">
+        <path d="M16.02 3C9.4 3 4 8.36 4 15c0 2.29.65 4.44 1.77 6.27L4 29l7.94-1.72A11.9 11.9 0 0 0 16.02 27C22.64 27 28 21.64 28 15S22.64 3 16.02 3Zm6.98 16.87c-.3.84-1.72 1.6-2.38 1.68-.61.08-1.37.11-2.21-.14-.51-.15-1.16-.37-2-.72-3.53-1.52-5.84-5.07-6.02-5.31-.18-.24-1.43-1.9-1.43-3.62s.9-2.57 1.22-2.92c.32-.35.7-.44.93-.44.24 0 .47 0 .68.01.22.01.51-.08.8.61.3.7 1.01 2.42 1.1 2.6.09.18.15.39.03.63-.12.24-.18.39-.36.6-.18.21-.38.47-.54.63-.18.18-.37.38-.16.74.21.36.93 1.53 2 2.48 1.37 1.22 2.53 1.6 2.89 1.78.36.18.57.15.78-.09.21-.24.9-1.05 1.14-1.41.24-.36.48-.3.8-.18.33.12 2.08.98 2.44 1.16.36.18.6.27.68.42.09.15.09.85-.21 1.69Z"/>
+      </svg>
+    </a>
+  </div>
 
   <!-- FOOTER -->
   <footer>
@@ -1575,6 +2059,104 @@
         }
       });
     });
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Scroll progress bar
+    const scrollProgress = document.getElementById('scrollProgress');
+    function updateScrollProgress() {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+      scrollProgress.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+    updateScrollProgress();
+
+    // Hero cursor-reactive glow
+    const hero = document.getElementById('top');
+    const heroGlow = document.getElementById('heroCursorGlow');
+    if (hero && heroGlow && !reduceMotion) {
+      hero.addEventListener('mousemove', (e) => {
+        const rect = hero.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        heroGlow.style.setProperty('--mx', x + '%');
+        heroGlow.style.setProperty('--my', y + '%');
+      });
+    }
+
+    // Process progress line — fills in once the section is in view
+    const processProgress = document.getElementById('processProgress');
+    if (processProgress) {
+      const progressObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) processProgress.classList.add('visible'); });
+      }, { threshold: 0.3 });
+      progressObserver.observe(processProgress);
+    }
+
+    // Magnetic buttons — nudge toward the cursor within a bounded radius
+    if (!reduceMotion) {
+      document.querySelectorAll('[data-magnetic]').forEach(el => {
+        el.addEventListener('mousemove', (e) => {
+          const rect = el.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          el.style.transform = `translate(${x * 0.18}px, ${y * 0.3}px)`;
+        });
+        el.addEventListener('mouseleave', () => { el.style.transform = 'translate(0, 0)'; });
+      });
+    }
+
+    // Gallery cards — subtle 3D tilt toward cursor
+    if (!reduceMotion) {
+      document.querySelectorAll('[data-tilt]').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          card.style.transform = `perspective(700px) rotateX(${y * -8}deg) rotateY(${x * 8}deg) translateY(-4px)`;
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(700px) rotateX(0) rotateY(0) translateY(0)';
+        });
+      });
+    }
+
+    // Floating WhatsApp button — appears once the hero has scrolled out of view
+    const floatContact = document.getElementById('floatContact');
+    if (floatContact) {
+      const floatObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => { floatContact.classList.toggle('visible', !e.isIntersecting); });
+      }, { threshold: 0 });
+      floatObserver.observe(hero);
+    }
+
+    // Copy email to clipboard
+    const copyEmailBtn = document.getElementById('copyEmailBtn');
+    if (copyEmailBtn) {
+      const copyIcon = copyEmailBtn.innerHTML;
+      const checkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+      copyEmailBtn.addEventListener('click', async () => {
+        const email = 'lesamladenovicc@gmail.com';
+        try {
+          await navigator.clipboard.writeText(email);
+        } catch {
+          const ta = document.createElement('textarea');
+          ta.value = email;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        }
+        copyEmailBtn.innerHTML = checkIcon;
+        copyEmailBtn.title = 'Copied!';
+        setTimeout(() => {
+          copyEmailBtn.innerHTML = copyIcon;
+          copyEmailBtn.title = 'Copy email';
+        }, 1600);
+      });
+    }
   </script>
 </body>
 
