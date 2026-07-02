@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="sr">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aleksandar — Web Dizajn</title>
+  <title>Aleksandar — Web Design</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
     rel="stylesheet">
@@ -1074,6 +1074,26 @@
       transform: scale(1.03);
     }
 
+    /* REDUCED MOTION */
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      body.js-ready .fade-in,
+      body.js-ready .fade-in-left,
+      body.js-ready .fade-in-right {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
     /* RESPONSIVE */
     @media (max-width: 900px) {
       nav {
@@ -1229,10 +1249,10 @@
   <nav id="navbar">
     <a href="#" class="nav-logo">Aleksandar</a>
     <ul class="nav-links">
-      <li><a href="#usluge">Usluge</a></li>
-      <li><a href="#proces">Proces</a></li>
-      <li><a href="#ukljuceno">Šta dobijate</a></li>
-      <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
+      <li><a href="#usluge">Services</a></li>
+      <li><a href="#proces">Process</a></li>
+      <li><a href="#ukljuceno">What You Get</a></li>
+      <li><a href="#kontakt" class="nav-cta">Contact</a></li>
     </ul>
     <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu"
       style="position:relative;z-index:300;">
@@ -1248,63 +1268,63 @@
         style="display:block;width:24px;height:1px;background:var(--black);transform:rotate(45deg);margin-bottom:-1px;"></span>
       <span style="display:block;width:24px;height:1px;background:var(--black);transform:rotate(-45deg);"></span>
     </button>
-    <a href="#usluge" class="mobile-link" onclick="closeMenu()">Usluge</a>
-    <a href="#proces" class="mobile-link" onclick="closeMenu()">Proces</a>
-    <a href="#ukljuceno" class="mobile-link" onclick="closeMenu()">Šta dobijate</a>
-    <a href="#kontakt" class="mobile-link" onclick="closeMenu()">Kontakt</a>
+    <a href="#usluge" class="mobile-link" onclick="closeMenu()">Services</a>
+    <a href="#proces" class="mobile-link" onclick="closeMenu()">Process</a>
+    <a href="#ukljuceno" class="mobile-link" onclick="closeMenu()">What You Get</a>
+    <a href="#kontakt" class="mobile-link" onclick="closeMenu()">Contact</a>
   </div>
 
   <!-- HERO -->
   <section class="hero" id="top">
-    <div class="hero-eyebrow fade-in">Web dizajn za lokalne firme</div>
+    <div class="hero-eyebrow fade-in">Web design for local businesses</div>
     <h1 class="fade-in fade-in-delay-1">
-      Vaša firma<br>
-      zaslužuje sajt koji<br>
-      <em>radi za vas.</em>
+      Your business<br>
+      deserves a site that<br>
+      <em>works for you.</em>
     </h1>
     <div class="hero-bottom fade-in fade-in-delay-2">
-      <p class="hero-desc">Pravim profesionalne, brze i moderne sajtove za firme na Balkanu. Bez komplikacija, bez
-        skrivenih troškova — samo sajt koji donosi nove klijente.</p>
+      <p class="hero-desc">I build professional, fast, and modern websites for businesses across the Balkans. No
+        complications, no hidden costs — just a site that brings in new clients.</p>
       <div class="hero-cta-group">
-        <div class="price-tag">€500</div>
-        <div class="price-sub">Kompletan sajt · Isporuka 5–7 dana</div>
-        <a href="#kontakt" class="btn-primary" style="margin-top:8px;">Poručite sajt</a>
+        <div class="price-tag">$1,000</div>
+        <div class="price-sub">Complete website · Delivered in 5–7 days</div>
+        <a href="#kontakt" class="btn-primary" style="margin-top:8px;">Order Your Site</a>
       </div>
     </div>
-    <div class="hero-scroll">Skroluj</div>
+    <div class="hero-scroll">Scroll</div>
   </section>
 
   <div class="divider"></div>
 
   <!-- SERVICES -->
   <section id="usluge">
-    <div class="section-label">Usluge</div>
+    <div class="section-label">Services</div>
     <div class="services-header">
-      <h2 class="services-title fade-in">Sve što vaša<br>firma <em>treba</em><br>online.</h2>
-      <p class="services-intro fade-in">Svaki sajt koji pravim je jedinstven, dizajniran za vašu firmu i optimizovan da
-        privlači klijente koji traže baš to što vi nudite.</p>
+      <h2 class="services-title fade-in">Everything your<br>business <em>needs</em><br>online.</h2>
+      <p class="services-intro fade-in">Every site I build is unique, designed for your business and optimized to
+        attract clients who are searching for exactly what you offer.</p>
     </div>
     <div class="services-grid">
       <div class="service-item fade-in">
         <div class="service-num">01</div>
-        <div class="service-name">Starter sajt</div>
-        <div class="service-desc">Do 5 stranica. Dizajn, mobilna verzija, kontakt forma, Google Maps, osnovna SEO
-          optimizacija. Sve što jedna firma treba da bude pronađena online.</div>
-        <div class="service-price">€500 <span>/ sajt · 5–7 dana</span></div>
+        <div class="service-name">Starter Website</div>
+        <div class="service-desc">Up to 5 pages. Design, mobile version, contact form, Google Maps, basic SEO
+          optimization. Everything a business needs to be found online.</div>
+        <div class="service-price">$1,000 <span>/ site · 5–7 days</span></div>
       </div>
       <div class="service-item fade-in fade-in-delay-1">
         <div class="service-num">02</div>
-        <div class="service-name">Mesečno održavanje</div>
-        <div class="service-desc">Ažuriranje sadržaja, izmene tekstova i fotografija, tehnička podrška. Vaš sajt ostaje
-          uvek svež bez da vi morate da brinete o tome.</div>
-        <div class="service-price">€50–100 <span>/ mesec</span></div>
+        <div class="service-name">Monthly Maintenance</div>
+        <div class="service-desc">Content updates, text and photo changes, technical support. Your site stays fresh
+          without you having to worry about it.</div>
+        <div class="service-price">$50–100 <span>/ month</span></div>
       </div>
       <div class="service-item fade-in fade-in-delay-2">
         <div class="service-num">03</div>
-        <div class="service-name">Refresh starog sajta</div>
-        <div class="service-desc">Imate sajt koji izgleda zastarelo ili se ne učitava dobro na mobilnom? Renoviramo ga —
-          novi dizajn, brže učitavanje, moderan izgled.</div>
-        <div class="service-price">Dogovor</div>
+        <div class="service-name">Website Refresh</div>
+        <div class="service-desc">Have a site that looks outdated or doesn't load well on mobile? I'll renovate it —
+          new design, faster loading, modern look.</div>
+        <div class="service-price">Custom quote</div>
       </div>
     </div>
   </section>
@@ -1313,35 +1333,35 @@
 
   <!-- PROCESS -->
   <section id="proces">
-    <div class="section-label">Kako radimo</div>
+    <div class="section-label">How I Work</div>
     <div class="process-grid">
       <div class="process-step fade-in">
         <div class="process-step-num">01</div>
-        <div class="process-step-title">Razgovor</div>
-        <div class="process-step-desc">Javite se putem WhatsApp ili emaila. Porazgovaramo o vašoj firmi, šta vam treba i
-          kako vaš sajt treba da izgleda.</div>
-        <div class="process-step-time">Dan 1</div>
+        <div class="process-step-title">Consultation</div>
+        <div class="process-step-desc">Reach out via WhatsApp or email. We'll talk about your business, what you need,
+          and how your site should look.</div>
+        <div class="process-step-time">Day 1</div>
       </div>
       <div class="process-step fade-in fade-in-delay-1">
         <div class="process-step-num">02</div>
-        <div class="process-step-title">Dogovor i uplata</div>
-        <div class="process-step-desc">30% unapred (€150) i kreće se sa radom. Vi šaljete logo, fotografije i tekst o
-          firmi — mi se brinemo za sve ostalo.</div>
-        <div class="process-step-time">Dan 1–2</div>
+        <div class="process-step-title">Agreement & Deposit</div>
+        <div class="process-step-desc">$300 upfront and work begins. You send your logo, photos, and business info —
+          I take care of everything else.</div>
+        <div class="process-step-time">Day 1–2</div>
       </div>
       <div class="process-step fade-in fade-in-delay-2">
         <div class="process-step-num">03</div>
-        <div class="process-step-title">Izrada</div>
-        <div class="process-step-desc">Gradim vaš sajt. Pošaljem vam link za pregled pre nego što ode na internet. Jedna
-          runda izmena je uključena.</div>
-        <div class="process-step-time">Dan 2–5</div>
+        <div class="process-step-title">Development</div>
+        <div class="process-step-desc">I build your site and send you a preview link before it goes live. One round
+          of revisions is included.</div>
+        <div class="process-step-time">Day 2–5</div>
       </div>
       <div class="process-step fade-in fade-in-delay-3">
         <div class="process-step-num">04</div>
-        <div class="process-step-title">Lansiranje</div>
-        <div class="process-step-desc">Sajt ide na vaš domen. Plaća se ostatak (€350). Pomažem vam i sa domenom ako ga
-          nemate. Sajt je vaš.</div>
-        <div class="process-step-time">Dan 5–7</div>
+        <div class="process-step-title">Launch</div>
+        <div class="process-step-desc">Your site goes live on your domain. The remaining $700 is due. I'll help with
+          the domain too if you don't have one. The site is yours.</div>
+        <div class="process-step-time">Day 5–7</div>
       </div>
     </div>
   </section>
@@ -1350,32 +1370,32 @@
 
   <!-- WHAT'S INCLUDED -->
   <section id="ukljuceno">
-    <div class="section-label">Šta je uključeno</div>
+    <div class="section-label">What's Included</div>
     <div class="included-grid">
       <div class="included-left fade-in fade-in-left">
-        <h2 class="included-title">Za €500<br>dobijate <em>gotov<br>biznis online.</em></h2>
-        <p style="font-size:14px; color:var(--ink-mid); line-height:1.8; margin-bottom:32px;">Nema skrivenih troškova.
-          Cena pokriva kompletan dizajn i razvoj. Jedini dodatan trošak koji plaćate direktno je domen (~€10/godišnje)
-          ako ga nemate.</p>
+        <h2 class="included-title">For $1,000<br>you get a <em>complete<br>business online.</em></h2>
+        <p style="font-size:14px; color:var(--ink-mid); line-height:1.8; margin-bottom:32px;">No hidden costs. The
+          price covers complete design and development. The only extra cost you pay directly is the domain
+          (~$12/year) if you don't already have one.</p>
         <ul class="included-list">
-          <li>Do 7 stranica (Početna, O nama, Usluge, Galerija, Kontakt...)</li>
-          <li>Mobilni responzivni dizajn</li>
-          <li>Kontakt forma i Google Maps embed</li>
-          <li>SEO optimizacija za lokalne pretrage</li>
-          <li>Brzo učitavanje</li>
-          <li>Pomoć pri registraciji domena</li>
-          <li>Besplatna tehnička podrška 30 dana</li>
+          <li>Up to 7 pages (Home, About, Services, Gallery, Contact...)</li>
+          <li>Mobile responsive design</li>
+          <li>Contact form and Google Maps embed</li>
+          <li>SEO optimization for local search</li>
+          <li>Fast loading speed</li>
+          <li>Help with domain registration</li>
+          <li>Free technical support for 30 days</li>
         </ul>
       </div>
       <div class="included-right fade-in fade-in-right fade-in-delay-1">
-        <div class="big-price" data-count="500">€<span class="count-num">500</span></div>
-        <div class="big-price-note" style="margin:12px 0 40px;">Fiksna cena · Bez iznenađenja</div>
-        <p style="font-size:14px; color:var(--ink-mid); line-height:1.8; margin-bottom:32px; max-width:360px;">Svaki
-          mesec hiljade ljudi u vašem gradu traži vaš tip usluge na Google-u. Bez sajta — oni odlaze kod konkurencije.
-          Avans je svega €150 (30%) — ostatak plaćate tek kad vidite gotov sajt.</p>
+        <div class="big-price" data-count="1000">$<span class="count-num">1,000</span></div>
+        <div class="big-price-note" style="margin:12px 0 40px;">Fixed price · No surprises</div>
+        <p style="font-size:14px; color:var(--ink-mid); line-height:1.8; margin-bottom:32px; max-width:360px;">Every
+          month thousands of people in your city search for your type of service on Google. Without a site — they go
+          to your competitors. The deposit is just $300 — you pay the rest ($700) only once your site is live.</p>
         <div class="included-cta">
-          <a href="#kontakt" class="btn-primary">Poručite vaš sajt</a>
-          <a href="https://wa.me/381605339990" class="btn-secondary" target="_blank">Pišite na WhatsApp →</a>
+          <a href="#kontakt" class="btn-primary">Order Your Website</a>
+          <a href="https://wa.me/381605339990" class="btn-secondary" target="_blank">Message on WhatsApp →</a>
         </div>
       </div>
     </div>
@@ -1385,13 +1405,13 @@
 
   <!-- CONTACT -->
   <section id="kontakt">
-    <div class="section-label">Kontakt</div>
+    <div class="section-label">Contact</div>
     <div class="contact-grid">
       <div class="contact-left fade-in fade-in-left">
-        <h2 class="contact-title">Hajde da<br><em>napravimo</em><br>nešto.</h2>
-        <p class="contact-bio">Zovem se Aleksandar. Student sam i web dizajner iz Beograda. Pravim sajtove za lokalne
-          firme — brzo, kvalitetno i po razumnoj ceni. Svaki sajt pristupam ozbiljno jer znam da je to vaše lice na
-          internetu.</p>
+        <h2 class="contact-title">Let's build<br><em>something</em><br>together.</h2>
+        <p class="contact-bio">My name is Aleksandar. I'm a student and web designer from Belgrade. I build websites
+          for local businesses — fast, high-quality, and at a fair price. I take every site seriously because I know
+          it's your face on the internet.</p>
         <div class="contact-items">
           <div class="contact-item">
             <span class="contact-item-label">Email</span>
@@ -1399,7 +1419,7 @@
               class="contact-item-value" id="emailLink">lesamladenovicc&#64;gmail.com</a>
           </div>
           <div class="contact-item">
-            <span class="contact-item-label">Telefon</span>
+            <span class="contact-item-label">Phone</span>
             <a href="tel:+381605339990" class="contact-item-value">+381 60 533 9990</a>
           </div>
           <div class="contact-item">
@@ -1416,29 +1436,29 @@
         <form class="contact-form" id="contactForm" action="https://formspree.io/f/mzdkeraq" method="POST">
           <div class="form-row">
             <div class="form-group">
-              <label>Vaše ime</label>
-              <input type="text" placeholder="Marko Marković" required>
+              <label>Your name</label>
+              <input type="text" placeholder="John Smith" required>
             </div>
             <div class="form-group">
-              <label>Firma</label>
-              <input type="text" placeholder="Naziv firme">
+              <label>Company</label>
+              <input type="text" placeholder="Company name">
             </div>
           </div>
           <div class="form-group">
-            <label>Telefon ili email</label>
+            <label>Phone or email</label>
             <input type="text" placeholder="+381 6x xxx xxxx" required>
           </div>
           <div class="form-group">
-            <label>Tip biznisa</label>
-            <input type="text" placeholder="Restoran, salon, auto servis...">
+            <label>Business type</label>
+            <input type="text" placeholder="Restaurant, salon, auto shop...">
           </div>
           <div class="form-group">
-            <label>Poruka (opciono)</label>
-            <textarea placeholder="Šta vam treba od sajta?"></textarea>
+            <label>Message (optional)</label>
+            <textarea placeholder="What do you need for your website?"></textarea>
           </div>
-          <button type="submit" class="form-submit">Pošaljite upit</button>
+          <button type="submit" class="form-submit">Send Inquiry</button>
           <div class="form-success" id="formSuccess">
-            Hvala! Javim se u roku od 24 sata.
+            Thanks! I'll get back to you within 24 hours.
           </div>
         </form>
       </div>
@@ -1448,7 +1468,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-name">Aleksandar Mladenović</div>
-    <div class="footer-copy">© 2026 · allex.website · Web dizajn · Beograd, Srbija</div>
+    <div class="footer-copy">© 2026 · allex.website · Web Design · Belgrade, Serbia</div>
   </footer>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
@@ -1505,9 +1525,9 @@
       function step(now) {
         const progress = Math.min((now - start) / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
-        numEl.textContent = Math.round(eased * target);
+        numEl.textContent = Math.round(eased * target).toLocaleString('en-US');
         if (progress < 1) requestAnimationFrame(step);
-        else numEl.textContent = target;
+        else numEl.textContent = target.toLocaleString('en-US');
       }
       requestAnimationFrame(step);
     }
@@ -1526,7 +1546,7 @@
     document.getElementById('contactForm').addEventListener('submit', async function (e) {
       e.preventDefault();
       const btn = this.querySelector('.form-submit');
-      btn.textContent = 'Šaljem...';
+      btn.textContent = 'Sending...';
       btn.disabled = true;
       const data = new FormData(this);
       try {
@@ -1536,11 +1556,11 @@
           document.getElementById('formSuccess').style.display = 'block';
           this.reset();
         } else {
-          btn.textContent = 'Greška — pokušajte ponovo';
+          btn.textContent = 'Error — please try again';
           btn.disabled = false;
         }
       } catch {
-        btn.textContent = 'Greška — pokušajte ponovo';
+        btn.textContent = 'Error — please try again';
         btn.disabled = false;
       }
     });
